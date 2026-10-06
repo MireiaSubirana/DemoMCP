@@ -1,0 +1,744 @@
+/* ============================================================
+   HAND-MADE FIGMA TO CODE — Step 1
+   ============================================================
+
+   This file turns the Figma design into real styles.
+
+   It is organised in the same order your Figma file is built,
+   so you can compare them side by side:
+
+     1. Primitive tokens   = your "color primitives", "text
+                             primitives", "space primitives",
+                             "radius primitives" collections
+     2. Semantic tokens    = your "color" collection (light/dark)
+     3. Responsive sizes   = your lg / md / sm modes
+     4. Reset              = housekeeping, no Figma equivalent
+     5. Text styles        = your font/… text styles
+     6. Components         = Navigation, Hero, ProjectCard, …
+
+   A note on "--something" names below. Those are CSS custom
+   properties — CSS's own version of a Figma variable. You define
+   a value once and reuse it everywhere with var(--name).
+   Change it in one place and every use updates, exactly like
+   editing a variable in Figma.
+   ============================================================ */
+
+
+/* ============================================================
+   1. PRIMITIVE TOKENS
+   ============================================================
+   The raw ingredients. These are literal values with no meaning
+   attached — "brand 500" does not say where it should be used.
+
+   :root means "the whole document", so anything defined here is
+   available to every rule further down.
+   ============================================================ */
+
+:root {
+  /* --- Colour primitives (your "color primitives" collection) --- */
+  --color-brand-100: #FFEDE5;
+  --color-brand-200: #FFCCB8;
+  --color-brand-300: #FFA585;
+  --color-brand-400: #FF8556;
+  --color-brand-500: #FF6330;  /* the orange logo dot */
+  --color-brand-600: #E54D1A;
+  --color-brand-700: #B33B14;
+  --color-brand-800: #80290D;
+  --color-brand-900: #4D1707;
+
+  --color-neutral-000: #FFFFFF;
+  --color-neutral-100: #F7F7F7;
+  --color-neutral-200: #E8E8E8;
+  --color-neutral-300: #D1D1D1;
+  --color-neutral-400: #A0A0A0;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #3D3D3D;
+  --color-neutral-800: #2C2C2C;
+  --color-neutral-900: #161616;
+  --color-neutral-999: #000000;
+
+  /* --- Spacing primitives (your "space primitives" collection) ---
+     Every gap and padding in the design should come from this
+     short list. That is what keeps spacing consistent. */
+  --space-100: 4px;
+  --space-200: 8px;
+  --space-300: 12px;
+  --space-400: 16px;
+  --space-500: 24px;
+  --space-600: 32px;
+  --space-700: 48px;
+  --space-800: 64px;
+  --space-900: 80px;
+
+  /* --- Radius primitives --- */
+  --radius-md: 8px;
+
+  /* --- Type primitives (your "text primitives" collection) ---
+     The font sizes below are the "lg (>1280)" mode. The md and sm
+     modes are further down in section 3. */
+  --font-family-sans: 'Poppins', sans-serif;
+
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --font-size-100: 16px;
+  --font-size-200: 24px;
+  --font-size-300: 40px;
+  --font-size-400: 48px;
+  --font-size-500: 56px;
+  --font-size-600: 80px;
+}
+
+
+/* ============================================================
+   2. SEMANTIC TOKENS — LIGHT MODE
+   ============================================================
+   These say what a colour is FOR, not what it is.
+
+   Notice every value is a var() pointing at a primitive above.
+   That is exactly how your Figma file works: text/default is an
+   alias of color/neutral/900, it is not its own hex code.
+
+   Why bother with two layers? Because "surface/raised" survives a
+   rebrand and "#F7F7F7" does not. When you build components you
+   only ever reach for these semantic names.
+   ============================================================ */
+
+:root {
+  --text-default:   var(--color-neutral-900);
+  --text-muted:     var(--color-neutral-600);
+  --text-disabled:  var(--color-neutral-400);
+  --text-inverse:   var(--color-neutral-000);
+  --text-accent:    var(--color-brand-500);
+
+  --surface-default:       var(--color-neutral-000);
+  --surface-raised:        var(--color-neutral-100);
+  --surface-inverse:       var(--color-neutral-900);
+  --surface-accent-subtle: var(--color-brand-100);
+
+  --border-default: var(--color-neutral-300);
+  --border-strong:  var(--color-neutral-900);
+  --border-accent:  var(--color-brand-500);
+  --border-focus:   var(--color-brand-500);
+
+  --action-primary-default:  var(--color-neutral-800);
+  --action-primary-hover:    var(--color-neutral-700);
+  --action-primary-pressed:  var(--color-neutral-900);
+  --action-primary-disabled: var(--color-neutral-200);
+  --action-primary-text:     var(--color-neutral-000);
+
+  --action-secondary-default: var(--color-neutral-000);
+  --action-secondary-hover:   var(--color-neutral-200);
+  --action-secondary-pressed: var(--color-neutral-300);
+  --action-secondary-text:    var(--color-neutral-900);
+  --action-secondary-border:  var(--color-neutral-800);
+}
+
+
+/* ------------------------------------------------------------
+   SEMANTIC TOKENS — DARK MODE  (optional extra)
+   ------------------------------------------------------------
+   Your Figma "color" collection has two modes, light and dark.
+   We only built the light design, but the dark values exist, so
+   here they are.
+
+   prefers-color-scheme asks the visitor's operating system
+   whether they have chosen dark mode. If they have, these values
+   replace the ones above — and nothing else in this file changes.
+   That is the payoff of semantic tokens.
+
+   Heads up: the photographs are light, so dark mode looks a bit
+   odd right now. See gaps.md.
+   ------------------------------------------------------------ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-default:   var(--color-brand-100);
+    --text-muted:     var(--color-neutral-400);
+    --text-disabled:  var(--color-neutral-600);
+    --text-inverse:   var(--color-neutral-900);
+    --text-accent:    var(--color-brand-500);
+
+    --surface-default:       var(--color-neutral-900);
+    --surface-raised:        var(--color-neutral-800);
+    --surface-inverse:       var(--color-neutral-100);
+    --surface-accent-subtle: var(--color-brand-900);
+
+    --border-default: var(--color-neutral-700);
+    --border-strong:  var(--color-neutral-400);
+    --border-accent:  var(--color-brand-500);
+    --border-focus:   var(--color-brand-400);
+
+    --action-primary-default:  var(--color-neutral-100);
+    --action-primary-hover:    var(--color-neutral-200);
+    --action-primary-pressed:  var(--color-neutral-300);
+    --action-primary-disabled: var(--color-neutral-700);
+    --action-primary-text:     var(--color-neutral-900);
+
+    --action-secondary-default: var(--color-neutral-900);
+    --action-secondary-hover:   var(--color-neutral-800);
+    --action-secondary-pressed: var(--color-neutral-700);
+    --action-secondary-text:    var(--color-neutral-100);
+    --action-secondary-border:  var(--color-neutral-200);
+  }
+}
+
+
+/* ============================================================
+   3. RESPONSIVE TYPE — the lg / md / sm modes
+   ============================================================
+   This is the most important idea on the page, so it is worth
+   reading slowly.
+
+   In Figma you cannot have one frame that resizes itself, so
+   Christine built Hero, ProjectCard and the rest three times —
+   once per breakpoint — and swapped the "text primitives" mode
+   between lg, md and sm to change the sizes.
+
+   In CSS you do not need three copies. You write the component
+   once and simply redefine the font-size variables when the
+   window gets narrower. Every text style that uses them updates
+   automatically.
+
+   A @media block means "only apply these rules when the
+   condition is true". max-width: 1280px means "when the window
+   is 1280px wide or less".
+
+   Only the sizes that actually change are listed. Anything not
+   mentioned keeps its lg value.
+   ============================================================ */
+
+/* md mode — your "md (>800)" */
+@media (max-width: 1280px) {
+  :root {
+    --font-size-300: 32px;  /* was 40 */
+    --font-size-400: 40px;  /* was 48 */
+    --font-size-600: 64px;  /* was 80 */
+  }
+}
+
+/* sm mode — your "sm (<800)" */
+@media (max-width: 800px) {
+  :root {
+    --font-size-200: 16px;  /* was 24 */
+    --font-size-300: 32px;
+    --font-size-400: 32px;  /* was 40 */
+    --font-size-500: 40px;  /* was 56 */
+    --font-size-600: 48px;  /* was 64 */
+  }
+}
+
+
+/* ============================================================
+   4. RESET
+   ============================================================
+   Browsers add their own default margins and sizes. This clears
+   the ones that would fight with the design. There is no Figma
+   equivalent — it is pure housekeeping.
+   ============================================================ */
+
+/* border-box means "when I say 300px wide, include the padding
+   and border in that 300px". It is how Figma already thinks, and
+   it is not the browser default, so we change it everywhere. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+h1, h2, h3,
+p,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;  /* removes the bullet points from the nav */
+}
+
+a {
+  text-decoration: none;  /* removes the default blue underline */
+  color: inherit;         /* links take the colour of their parent */
+}
+
+/* Images are "inline" by default, which leaves a few stray pixels
+   of gap underneath. block removes that. */
+img {
+  display: block;
+  max-width: 100%;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  background-color: var(--surface-default);
+  color: var(--text-default);
+
+  /* Makes fonts render closer to how Figma draws them on a Mac. */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* A visible outline when navigating by keyboard. Your Figma file
+   has a note about this: "Focus is a visible outline showing which
+   element is keyboard-selected, essential for accessibility."
+   :focus-visible shows it for keyboard users but not mouse clicks. */
+:focus-visible {
+  outline: 3px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+
+/* ============================================================
+   5. TEXT STYLES
+   ============================================================
+   One block per text style in your Figma file. The names match
+   exactly, so font/headline/md in Figma is .font-headline-md
+   here — except we apply them to real elements rather than
+   as classes, to keep the HTML clean.
+
+   Two conversions worth understanding:
+
+   LINE HEIGHT — Figma writes 120%, CSS prefers the plain number
+   1.2. Same thing: "1.2 times the font size".
+
+   LETTER SPACING — Figma writes -2%, CSS has no percent here, so
+   we use "em". 1em = the current font size, so -2% = -0.02em.
+   Because it is relative, it keeps working when the font size
+   changes between breakpoints. (A fixed -1.6px would not.)
+   ============================================================ */
+
+/* font/display/md — the big hero headline.
+   textCase is UPPER in Figma, which is a style, not typed text. */
+.hero__headline {
+  font-size: var(--font-size-600);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+/* font/headline/lg — "About me", "Skills" */
+.about__headline,
+.skills__headline {
+  font-size: var(--font-size-400);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.45;
+  letter-spacing: -0.02em;
+}
+
+/* font/headline/md — project card titles */
+.project__headline {
+  font-size: var(--font-size-300);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+/* font/headline/sm — skill column titles */
+.skill__headline {
+  font-size: var(--font-size-200);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+}
+
+/* font/caption/md — "James Jones" above the hero headline */
+.hero__subtitle {
+  font-size: var(--font-size-200);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+}
+
+/* font/body/md/default — all the paragraphs */
+.project__description,
+.about__description,
+.skill__content,
+.footer__copyright,
+.footer__link {
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.7;
+  letter-spacing: -0.005em;
+}
+
+/* font/link/md — "find out more →"
+   Same as body text but bold. (Letter spacing used to be -2% here,
+   which was inherited from the 80px display style; it is now -0.5%
+   like the rest of the 16px styles.) */
+.project__link {
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.7;
+  letter-spacing: -0.005em;
+}
+
+/* font/navigation/md and font/button/md are identical in Figma:
+   16px semibold, automatic line height, no letter spacing. */
+.nav__link,
+.button {
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-semibold);
+  line-height: normal;   /* Figma calls this AUTO */
+  letter-spacing: 0;
+}
+
+
+/* ============================================================
+   6. LAYOUT HELPER
+   ============================================================
+   Every section in your Figma file holds a frame called
+   "container" that is 1200px wide and centred, with the section
+   background running full width behind it.
+
+   max-width (not width) means "never wider than 1200, but shrink
+   happily on small screens".
+   margin: 0 auto centres it: 0 top and bottom, auto left and
+   right, which splits the leftover space evenly.
+   ============================================================ */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+/* ============================================================
+   7. BUTTON  (Figma component "Button")
+   ============================================================
+   Your Figma component has 8 variants: primary and secondary,
+   each with default / hover / active / focused states.
+
+   In code, variants become extra classes (.button--primary) and
+   states become pseudo-classes (:hover, :active) that the browser
+   applies by itself. You never hand-draw a hover state.
+   ============================================================ */
+
+.button {
+  /* inline-flex lets us centre the label inside the button while
+     the button itself stays only as wide as its content —
+     the same as "hug contents" in Figma. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: var(--space-400) var(--space-500);  /* 16px 24px */
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+
+  /* Smooths the colour change on hover instead of snapping. */
+  transition: background-color 0.15s ease;
+}
+
+/* variant = primary — solid dark fill, white label */
+.button--primary {
+  background-color: var(--action-primary-default);
+  color: var(--action-primary-text);
+}
+
+.button--primary:hover {
+  background-color: var(--action-primary-hover);
+}
+
+.button--primary:active {
+  background-color: var(--action-primary-pressed);
+}
+
+/* variant = secondary — no fill, thick dark border.
+   The border colour comes from the action/secondary/border token,
+   which the Figma component is now properly bound to. */
+.button--secondary {
+  background-color: var(--action-secondary-default);
+  color: var(--action-secondary-text);
+  border: 3px solid var(--action-secondary-border);
+}
+
+.button--secondary:hover {
+  background-color: var(--action-secondary-hover);
+}
+
+.button--secondary:active {
+  background-color: var(--action-secondary-pressed);
+}
+
+
+/* ============================================================
+   8. NAVIGATION  (Figma component "Navigation")
+   ============================================================ */
+
+.nav {
+  /* display: flex puts children in a row. It is the CSS version
+     of Figma's horizontal auto layout. */
+  display: flex;
+  align-items: center;             /* vertical centring  */
+  justify-content: space-between;  /* logo left, menu right */
+
+  padding: var(--space-500) var(--space-600);  /* 24px 32px */
+  background-color: var(--surface-default);
+}
+
+/* The orange dot. No image needed — a 48px box with a radius of
+   50% is a perfect circle. */
+.nav__logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--text-accent);
+  flex-shrink: 0;  /* never let it squash */
+}
+
+.nav__items {
+  display: flex;
+  align-items: center;
+  gap: var(--space-700);  /* 48px — link group to button */
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-600);  /* 32px between the three links */
+}
+
+
+/* ============================================================
+   9. HERO  (Figma component "Hero")
+   ============================================================ */
+
+.hero {
+  padding: var(--space-600);  /* 32px on all four sides */
+  background-color: var(--surface-default);
+}
+
+.hero__container {
+  display: flex;
+  flex-direction: column;     /* stack the two lines of text */
+  gap: var(--space-400);      /* 16px between them */
+  text-align: center;
+}
+
+
+/* ============================================================
+   10. PROJECT CARD  (Figma component "ProjectCard")
+   ============================================================ */
+
+.project {
+  padding: var(--space-600);
+  background-color: var(--surface-default);
+}
+
+/* The 2nd and 4th cards. In Figma this is the "bg" layer being
+   switched on; here it is one extra class. */
+.project--raised {
+  background-color: var(--surface-raised);
+}
+
+.project__container {
+  display: flex;
+  gap: var(--space-600);   /* 32px between image and text */
+  align-items: flex-start; /* both columns start at the top */
+}
+
+/* flex: 1 tells both columns "share the available width equally".
+   In Figma both the media slot and the content frame are 584px
+   inside a 1200px container — equal halves. Writing it as flex: 1
+   means it stays equal at any screen width. */
+.project__media,
+.project__content {
+  flex: 1;
+  min-width: 0;  /* stops long words forcing the column wider */
+}
+
+/* aspect-ratio keeps the image box the same shape as in Figma
+   (584 x 329) however wide it gets.
+   object-fit: cover fills that box and crops the overflow,
+   rather than squashing the photo. */
+.project__media img {
+  width: 100%;
+  aspect-ratio: 584 / 329;
+  object-fit: cover;
+}
+
+.project__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-400);  /* 16px */
+}
+
+/* The arrow link sits on its own, so align-self keeps it as wide
+   as its text instead of stretching across the column. */
+.project__link {
+  align-self: flex-start;
+}
+
+
+/* ============================================================
+   11. ABOUT  (Figma component "About")
+   ============================================================ */
+
+.about {
+  /* 64px top, 48px sides, 48px bottom.
+     Figma has 64 left and 48 right, but the container inside is
+     centred, so the asymmetry has no visible effect. */
+  padding: var(--space-800) var(--space-700) var(--space-700);
+  background-color: var(--surface-default);
+}
+
+.about__container {
+  display: flex;
+  gap: 95px;  /* still not on the space scale — see gaps.md */
+  align-items: center;  /* text block centred against the photo */
+}
+
+.about__content,
+.about__media {
+  flex: 1;
+  min-width: 0;
+}
+
+.about__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-500);  /* 24px */
+  align-items: flex-start;
+}
+
+.about__media img {
+  width: 100%;
+  aspect-ratio: 1112 / 1008;  /* the photo's own shape */
+  object-fit: cover;
+}
+
+
+/* ============================================================
+   12. SKILLS  (Figma components "Skills" and "SkillItem")
+   ============================================================ */
+
+.skills {
+  padding: var(--space-700) var(--space-600);  /* 48px 32px */
+  background-color: var(--surface-default);
+}
+
+.skills__headline {
+  margin-bottom: var(--space-700);  /* 48px */
+}
+
+.skills__group {
+  display: flex;
+  gap: var(--space-700);  /* 48px between the three columns */
+}
+
+.skill {
+  flex: 1;
+  min-width: 0;
+
+  /* The thin line above each column. In Figma it is a 1px top
+     border on the SkillItem component, not a separate shape. */
+  border-top: 1px solid var(--border-strong);
+  padding: var(--space-400) 0;  /* 16px top and bottom */
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-400);  /* 16px between title and paragraph */
+}
+
+
+/* ============================================================
+   13. FOOTER  (Figma component "Footer")
+   ============================================================ */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-500);  /* 24px */
+
+  padding: var(--space-500);
+  background-color: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+
+/* ============================================================
+   14. RESPONSIVE LAYOUT
+   ============================================================
+   Section 3 changed the text sizes. This changes the layout.
+
+   Below 800px (your "sm" mode) the Figma design stacks
+   everything into a single column and reduces the side padding
+   from 32px to 24px.
+   ============================================================ */
+
+@media (max-width: 1280px) {
+  /* Tablet keeps the two-column layout but tightens the spacing. */
+  .nav,
+  .hero,
+  .project,
+  .skills {
+    padding-left: var(--space-500);
+    padding-right: var(--space-500);
+  }
+
+  .about {
+    padding-left: var(--space-500);
+    padding-right: var(--space-500);
+  }
+
+  .about__container {
+    gap: var(--space-700);  /* 95px is too wide once things shrink */
+  }
+
+  .nav__items {
+    gap: var(--space-600);
+  }
+}
+
+@media (max-width: 800px) {
+  /* flex-direction: column turns every side-by-side row into a
+     stack. The image ends up on top because it comes first in
+     the HTML. */
+  .project__container {
+    flex-direction: column;
+  }
+
+  .about__container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-600);
+  }
+
+  /* In the Figma mobile frame the photo sits ABOVE the text, but
+     in our HTML the text comes first. "order: -1" moves the photo
+     to the front visually without changing the HTML. */
+  .about__media {
+    order: -1;
+  }
+
+  .skills__group {
+    flex-direction: column;
+    gap: var(--space-600);
+  }
+
+  /* Let the long nav collapse gracefully rather than overflow. */
+  .nav {
+    flex-wrap: wrap;
+    gap: var(--space-400);
+  }
+
+  .nav__items {
+    gap: var(--space-500);
+  }
+
+  .nav__links {
+    gap: var(--space-500);
+  }
+
+  /* The footer's three items stack rather than squeeze. */
+  .footer {
+    flex-wrap: wrap;
+    text-align: center;
+  }
+}

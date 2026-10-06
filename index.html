@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  HAND-MADE FIGMA TO CODE — Step 1
+  ============================================================
+
+  This file is the STRUCTURE of the page: what content exists
+  and in what order. It contains no colours, sizes or spacing.
+  All of that lives in styles.css.
+
+  Think of it like this:
+    index.html  = the layer tree in Figma (what things are)
+    styles.css  = the design tokens + styles (what things look like)
+
+  Why separate them? Because then you can change the whole look
+  of the site by editing one file, without touching the content.
+
+  Built from the "<1280 (Desktop)" frame of:
+  "01 - Step 1: Hand made Figma to Code (Community) (Copy)"
+-->
+<html lang="en">
+
+<head>
+  <!-- Tells the browser the text uses the full international character
+       set, so "©" and the "→" arrow display correctly. -->
+  <meta charset="UTF-8">
+
+  <!-- Tells phones and tablets "use your real screen width, don't
+       pretend to be a desktop and shrink everything". Without this
+       line the responsive sizes further down would be ignored. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- The text shown in the browser tab. -->
+  <title>James Jones — UX. UI. Agentic AI.</title>
+
+  <!-- Loads the Poppins font from Google. Your Figma file uses
+       Poppins (the "font-family/sans" variable), and fonts are not
+       built into browsers, so we have to fetch it.
+       The three weights match the ones your file actually uses:
+       400 = regular, 600 = semibold, 700 = bold. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Connects this page to our stylesheet. -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!--
+    ============================================================
+    NAVIGATION  (Figma component: "Navigation")
+    ============================================================
+    <header> is a semantic tag. It means "this is the top bar of
+    the page". Screen readers and search engines understand it;
+    a plain <div> would look the same but mean nothing.
+  -->
+  <header class="nav">
+    <!-- The orange circle. In Figma this is an Ellipse 48x48 filled
+         with brand orange. There is no image file — it is drawn with
+         CSS (a square with fully rounded corners). -->
+    <a href="#" class="nav__logo" aria-label="Home"></a>
+
+    <!-- <nav> marks a group of navigation links. -->
+    <nav class="nav__items">
+      <ul class="nav__links">
+        <!-- A list, because that is what a menu is: a list of links.
+             The bullets are removed in CSS. -->
+        <li><a href="#" class="nav__link">about.</a></li>
+        <li><a href="#" class="nav__link">work.</a></li>
+        <li><a href="#" class="nav__link">blog.</a></li>
+      </ul>
+      <!-- Figma component "Button", variant=primary -->
+      <a href="#" class="button button--primary">contact</a>
+    </nav>
+  </header>
+
+  <!--
+    ============================================================
+    HERO  (Figma component: "Hero")
+    ============================================================
+    The big name and headline at the top.
+  -->
+  <section class="hero">
+    <div class="container hero__container">
+      <p class="hero__subtitle">James Jones</p>
+
+      <!-- <h1> is the single most important heading on a page.
+           Use it once, at the top.
+
+           Note: in Figma the text is typed as "UX. UI. / Agentic AI."
+           in normal capitals, and the text style font/display/md
+           applies UPPERCASE as a *style*. We do the same in CSS
+           (text-transform) rather than typing capitals here — so the
+           real words stay readable for screen readers and search.
+
+           <br> forces the line break that exists in the Figma text. -->
+      <h1 class="hero__headline">UX. UI. <br>Agentic AI.</h1>
+    </div>
+  </section>
+
+  <!--
+    ============================================================
+    PROJECT CARDS  (Figma component: "ProjectCard")
+    ============================================================
+    Four cards, image on the left, text on the right.
+
+    In Figma these are four separate instances named
+    "Component 4", "ProjectCard", "Component 2", "Component 3".
+    They are the SAME component with different content — so in code
+    they share one class, "project", and only the content changes.
+    That is the whole point of a design system.
+
+    The 2nd and 4th cards sit on a light grey background. In Figma
+    that is done with a "bg" layer that is hidden on cards 1 and 3.
+    Here we add the class "project--raised" instead.
+  -->
+
+  <!-- Card 1 — white background -->
+  <section class="project">
+    <div class="container project__container">
+      <div class="project__media">
+        <img src="assets/moonblocks.png" alt="Moonblocks learning platform shown on a mood board of interface screens">
+      </div>
+      <div class="project__content">
+        <h2 class="project__headline">moonblocks</h2>
+        <p class="project__description">I run moonlearning.io, a hands-on learning platform for UI design, Figma, and AI-powered product building. I cut through the noise and help people move from overthinking to designing and building.</p>
+        <a href="#" class="project__link">find out more →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Card 2 — grey background -->
+  <section class="project project--raised">
+    <div class="container project__container">
+      <div class="project__media">
+        <img src="assets/alpine-tracker.png" alt="Alpine Tracker app showing a list of mountain routes over a photo of peaks">
+      </div>
+      <div class="project__content">
+        <h2 class="project__headline">Alpine Tracker</h2>
+        <p class="project__description">I run moonlearning.io, a hands-on learning platform for UI design, Figma, and AI-powered product building. I cut through the noise and help people move from overthinking to designing and building.</p>
+        <a href="#" class="project__link">find out more →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Card 3 — white background -->
+  <section class="project">
+    <div class="container project__container">
+      <div class="project__media">
+        <img src="assets/soft-agents.png" alt="Diagram of AI agents connected to a central Claude node on a black background">
+      </div>
+      <div class="project__content">
+        <h2 class="project__headline">Soft Agents</h2>
+        <p class="project__description">I run moonlearning.io, a hands-on learning platform for UI design, Figma, and AI-powered product building. I cut through the noise and help people move from overthinking to designing and building.</p>
+        <a href="#" class="project__link">find out more →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Card 4 — grey background -->
+  <section class="project project--raised">
+    <div class="container project__container">
+      <div class="project__media">
+        <img src="assets/web-template.png" alt="Website template preview in an orange frame reading Like this website? Use my template">
+      </div>
+      <div class="project__content">
+        <h2 class="project__headline">Web Template</h2>
+        <p class="project__description">I run moonlearning.io, a hands-on learning platform for UI design, Figma, and AI-powered product building. I cut through the noise and help people move from overthinking to designing and building.</p>
+        <a href="#" class="project__link">find out more →</a>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    ============================================================
+    ABOUT  (Figma component: "About")
+    ============================================================
+    Text on the left, square portrait on the right.
+  -->
+  <section class="about">
+    <div class="container about__container">
+      <div class="about__content">
+        <h2 class="about__headline">About me</h2>
+        <p class="about__description">Welcome to my portfolio! I'm Kim, a passionate graphic UI designer dedicated to crafting visual experiences that resonate with users. My goal is to design interfaces that not only grab attention but also facilitate smooth navigation. I carefully select colour palettes that evoke the right emotions and typography that enhances clarity. I believe that intuitive design is key to guiding users effortlessly on their journey.</p>
+        <!-- Figma component "Button", variant=secondary:
+             no fill, 3px dark border instead. -->
+        <a href="#" class="button button--secondary">Contact</a>
+      </div>
+      <div class="about__media">
+        <img src="assets/about-portrait.png" alt="Portrait of Kim, smiling, wearing glasses and a white shirt">
+      </div>
+    </div>
+  </section>
+
+  <!--
+    ============================================================
+    SKILLS  (Figma components: "Skills" + "SkillItem")
+    ============================================================
+    A heading and three equal columns, each with a thin line on top.
+  -->
+  <section class="skills">
+    <div class="container">
+      <h2 class="skills__headline">Skills</h2>
+      <div class="skills__group">
+
+        <!-- Each of these is one "SkillItem" instance in Figma.
+             The line above each one is a 1px top border, not a
+             separate layer. -->
+        <article class="skill">
+          <h3 class="skill__headline">Headline</h3>
+          <p class="skill__content">A basic understanding of HTML and CSS helps me align design with the code effectively throughout the handoff.</p>
+        </article>
+
+        <article class="skill">
+          <h3 class="skill__headline">Headline</h3>
+          <p class="skill__content">A basic understanding of HTML and CSS helps me align design with the code effectively throughout the handoff.</p>
+        </article>
+
+        <article class="skill">
+          <h3 class="skill__headline">Headline</h3>
+          <p class="skill__content">A basic understanding of HTML and CSS helps me align design with the code effectively throughout the handoff.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!--
+    ============================================================
+    FOOTER  (Figma component: "Footer")
+    ============================================================
+    Dark bar, three centred items.
+  -->
+  <footer class="footer">
+    <p class="footer__copyright">© 2026 Christine Vallaure</p>
+    <a href="#" class="footer__link">Imprint</a>
+    <a href="#" class="footer__link">Contact</a>
+  </footer>
+
+</body>
+
+</html>

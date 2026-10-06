@@ -1,0 +1,17 @@
+# .gitignore
+#
+# A list of things git should pretend don't exist.
+# Anything matching a line here is never tracked, never committed,
+# and never uploaded to GitHub.
+
+# macOS drops one of these invisible files into every folder you
+# open in Finder. It stores icon positions. It is not part of your
+# project and it causes pointless changes in every commit.
+.DS_Store
+
+# Windows does the same thing with this one.
+Thumbs.db
+
+# Temporary files left behind by text editors.
+*.swp
+*~
